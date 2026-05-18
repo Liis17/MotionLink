@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(./gradlew.bat :app:assembleDebug --no-daemon)"
+      "Bash(./gradlew.bat :app:assembleDebug --no-daemon)",
+      "Bash(xcodebuild -project MotionLink.xcodeproj -scheme MotionLink -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build)"
     ]
   }
 }

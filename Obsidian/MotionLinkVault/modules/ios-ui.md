@@ -16,10 +16,24 @@ Parent: [[index]]
 | `icon` | `antenna.radiowaves.left.and.right`, `.symbolEffect(.variableColor)` пока список пуст |
 | `searching` | Показывается, если `servers.isEmpty` |
 | `serverList` | Карточки `ServerCard` с `name`, `host:port`, кнопкой «Подключиться» |
+| `manualEntryButton` | Кнопка «Ввести адрес вручную» под содержимым — открывает `ManualServerEntryView` |
 
 Входы: `servers: [DiscoveredServer]`, `onConnect: (DiscoveredServer) -> Void`.
 
 `ServerCard` — private struct внутри файла, не используется снаружи.
+
+### ManualServerEntryView (private)
+
+Sheet-форма с двумя полями (`host`, `port`) и кнопкой «Подключиться». Показывается через `.sheet(isPresented:)` с `.presentationDetents([.medium])`. По нажатию формирует синтетический `DiscoveredServer(host:, port:, name: nil)` и пробрасывает в тот же `onConnect`.
+
+| Состояние | Значение по умолчанию |
+|-----------|----------------------|
+| `host` | пустая строка |
+| `portText` | `String(DiscoveryService.discoveryPort)` (т.е. `"58930"`) |
+
+Валидация: `host` не пустой + `portText` парсится в `UInt16`. Кнопка дизейблится, если невалидно. Поле `host` автофокусится на appear.
+
+**Зачем нужно**: iOS 14+ требует `com.apple.developer.networking.multicast` entitlement для отправки UDP-broadcast — без него `255.255.255.255`-пробы из [[modules/ios-discovery]] молча дропаются системой, даже при выданном Local Network permission. Ручной ввод — fallback для случаев, когда entitlement недоступен.
 
 ## MotionHUDView
 

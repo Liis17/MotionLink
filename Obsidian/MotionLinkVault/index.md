@@ -40,6 +40,7 @@
 - [[api/app-state]] — конечный автомат `AppState` (searching ↔ streaming)
 
 ### 📋 Изменения
+- [[changelog/2026-05-18]] — ручной ввод адреса сервера в iOS как fallback для broadcast-discovery
 - [[changelog/2026-05-17]] — реализация Android-клиента, перенос PROTOCOL.md в корень, добавление README.md
 
 ## Стек технологий
